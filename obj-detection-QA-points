@@ -1,0 +1,96 @@
+python3 -m venv my-python
+
+Creates a virtual env for python.
+
+Source my-python/bin/activate
+
+Deactivate
+
+After venv don’t use —user.
+
+
+(python3) rabinandanMacbook:research rabinandan$ protoc object_detection/protos/anchor_generator.proto --python_out=.
+
+
+(python3) rabinandanMacbook:research rabinandan$ protoc object_detection/protos/*.proto --python_out=.
+
+
+
+ModuleNotFoundError: No module named 'tf_slim'
+Fixed the issue: In [2]: !pip install tf_slim
+
+
+
+OSError: [Errno url error] unknown url type: '%3ca%20href=%22https'
+….
+MODEL_FILE = MODEL_NAME + '.tar.gz'
+DOWNLOAD_BASE = 'http://download.tensorflow.org/models/object_detection/'
+
+# Path to frozen detection graph.
+PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
+
+# List of the strings that is used to add correct label for each box.
+PATH_TO_LABELS = os.path.join('data', 'mscoco_label_map.pbtxt')
+
+NUM_CLASSES = 90
+
+
+#Download Model
+
+# you can manually download this
+opener = urllib.request.URLopener()
+opener.retrieve(DOWNLOAD_BASE + MODEL_FILE, MODEL_FILE)
+
+tar_file = tarfile.open(MODEL_FILE)
+for file in tar_file.getmembers():
+  file_name = os.path.basename(file.name)
+  if 'frozen_inference_graph.pb' in file_name:
+    tar_file.extract(file, os.getcwd())
+
+……FIX
+…..
+
+
+
+
+
+AttributeError: module 'tensorflow' has no attribute 'GraphDef'
+…
+In TF-2 this is not supported :https://github.com/tensorflow/models/issues/7703
+FIX is here: In [12]: import tensorflow.compat.v1 as tf
+
+
+
+python3) rabinandanMacbook:proj_models rabinandan$ python -c 'import tensorflow as tf; print(tf.__version__)'  # for both Python 2 and Python 3
+2.3.0
+(python
+To see TF version.
+
+
+…
+SyntaxError: 'return' outside function
+FIX: move this line two space ahead.
+
+to Open image :- open image2.jpg  -..
+
+Model signatures:
+https://www.tensorflow.org/tfx/serving/signature_defs
+https://stackoverflow.com/questions/56234858/error-serving-signature-name-serving-default-not-found-in-signature-def
+Plus if you want to play with signature more: https://medium.com/@yuu.ishikawa/how-to-show-signatures-of-tensorflow-saved-model-5ac56cf1960f
+
+
+
+……………..
+Questions ->
+   How to loading model.  
+    No file at URL 
+Why this label is required: http://localhost:8888/notebooks/obj_detection.ipynb
+
+Why cant’s create sophisticated contents in gihhub repository.
+Meaning -> input_tensor = input_tensor[tf.newaxis,...] ?
+
+
+
+
+
+
