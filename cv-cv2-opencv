@@ -1,0 +1,45 @@
+</h1>https://stackoverflow.com/questions/10417108/what-is-different-between-all-these-opencv-python-interfaces</h1>
+
+137
+
+Officially, OpenCV releases two types of Python interfaces, cv and cv2.
+
+cv:
+
+I started working on cv. In this, all OpenCV data types are preserved as such. For example, when loaded, images are of format cvMat, same as in C++.
+
+For array operations, there are several functions like cvSet2D, cvGet2D, etc. And some discussions say, they are slower.
+
+For imageROI, you need special functions like cvSetImageROI.
+
+If you find contours, cvSeq structures are returned which is not so good to work with compared to Python lists or NumPy arrays.
+
+(And I think, soon its development will be stopped. Earlier, there was only cv. Later, OpenCV came with both cv and cv2. Now, there in the latest releases, there is only the cv2 module, and cv is a subclass inside cv2. You need to call import cv2.cv as cv to access it.)
+
+cv2:
+
+And the latest one is cv2. In this, everything is returned as NumPy objects like ndarray and native Python objects like lists,tuples,dictionary, etc. So due to this NumPy support, you can do any numpy operation here. NumPy is a highly stable and fast array processing library.
+
+For example, if you load an image, an ndarray is returned.
+
+array[i,j] gives you the pixel value at (i,j) position.
+
+Also, for imageROI, array slicing can be used like ROI=array[c1:c2,r1:r2]. No need of separate functions.
+
+To add two images, there isn't a need to call any function, just do res = img1+img2. (But NumPy addition is a modulo operation for uint8 arrays like images. See the article Difference between Matrix Arithmetic in OpenCV and Numpy to know more.
+
+Contours returned are lists of Numpy arrays. You can find a detailed discussion about Contours in Contours - 1 : Getting Started.
+
+In short, with cv2 everything is simplified and pretty fast.
+
+A simple discussion on how NumPy speed up cv2 is in Stack Overflow question Performance comparison of OpenCV-Python interfaces, cv and cv2.
+
+pyopencv:
+
+I don't know much about this since I haven't used it. But it seems to have stopped further development.
+
+I think it would be better to stick on to official libraries.
+
+In short, I would recommend you to use cv2!
+
+EDIT: You can see installation procedure for the cv2 module in Install OpenCV in Windows for Python.
